@@ -1,6 +1,6 @@
 # Life Review Skill
 
-一个用于人生事件复盘的 Codex Skill。它把 LRS-100 复盘量表、领域模块、哲学分析、卡点诊断、Mermaid 流程图、今日执行卡和 7 天追踪复盘整合在一起，帮助你把“想很多、做很少”的混乱状态压成可执行的下一步。
+一个用于人生事件复盘的可移植 Agent Skill。它把 LRS-100 复盘量表、领域模块、哲学分析、卡点诊断、Mermaid 流程图、今日执行卡和 7 天追踪复盘整合在一起，帮助你把“想很多、做很少”的混乱状态压成可执行的下一步。
 
 ## 它能做什么
 
@@ -15,23 +15,55 @@
 
 ```text
 life-review-skill/
-├─ README.md
-├─ 复盘量表-v1.md
-└─ life-review/
-   ├─ SKILL.md
+├─ README.md                 # 给人看的仓库说明
+├─ AGENTS.md                 # 给通用 AI coding agents 看的入口说明
+├─ CLAUDE.md                 # Claude Code 项目记忆，导入 AGENTS.md
+├─ 复盘量表-v1.md             # 独立完整版量表
+├─ life-review/
+   ├─ SKILL.md               # Codex / 通用 Agent Skills 入口
    ├─ agents/
    │  └─ openai.yaml
    └─ references/
       └─ lrs-100.md
+└─ .claude/
+   └─ skills/
+      └─ life-review/
+         ├─ SKILL.md         # Claude Code 项目级 skill
+         └─ references/
+            └─ lrs-100.md
 ```
 
 ## 使用方式
+
+### Codex
 
 在 Codex 中使用当前文件夹里的 skill：
 
 ```text
 使用 C:/Users/linlin/Documents/复盘/life-review 这个 skill，帮我复盘一件事。
 ```
+
+如果要全局安装到 Codex，可以把 `life-review/` 复制到你的 Codex skills 目录。
+
+### Claude Code
+
+本仓库已经包含 Claude Code 项目级 skill：
+
+```text
+.claude/skills/life-review/
+```
+
+在 Claude Code 中打开本仓库后，可以这样调用：
+
+```text
+/life-review 帮我复盘为什么我总是想得多做得少，输出卡点诊断图和每日行动流程图。
+```
+
+如果要作为 Claude Code 全局 skill 使用，可以把 `.claude/skills/life-review/` 复制到你的 Claude Code 用户级 skills 目录。
+
+### 其他 AI Agent
+
+兼容 Agent Skills 的工具可以直接使用 `life-review/` 文件夹，因为它遵循 `SKILL.md + references/` 的通用结构。支持读取 `AGENTS.md` 的 AI coding agents 可以先读取根目录的 `AGENTS.md`，再按说明加载 `life-review/SKILL.md`。
 
 也可以指定风格：
 
@@ -72,6 +104,16 @@ life-review-skill/
 | 直白版 | 需要清醒、稳定、可执行的分析 |
 | 毒舌版 | 需要打断自欺，但不羞辱人格 |
 | 督促版 | 需要被推着执行、打卡、复查 |
+
+## 兼容状态
+
+| 工具/标准 | 入口文件 | 状态 |
+| --- | --- | --- |
+| Codex Skills | `life-review/SKILL.md` | 已支持 |
+| Agent Skills 通用格式 | `life-review/SKILL.md` | 已支持 |
+| Claude Code Project Skill | `.claude/skills/life-review/SKILL.md` | 已支持 |
+| Claude Code Project Memory | `CLAUDE.md` | 已支持 |
+| 通用 AI coding agents | `AGENTS.md` | 已支持 |
 
 ## 校验
 
