@@ -1,0 +1,4 @@
+interface:
+  display_name: "人生复盘"
+  short_description: "用 LRS-100、领域模块和哲学分析复盘人生事件。"
+  default_prompt: "帮我复盘一件人生事件，分析当前困难、核心卡点、主要矛盾和下一步行动。"
