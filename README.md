@@ -2,6 +2,44 @@
 
 一个用于人生事件复盘的可移植 Agent Skill。它把 LRS-100 复盘量表、领域模块、哲学分析、卡点诊断、Mermaid 流程图、今日执行卡和 7 天追踪复盘整合在一起，帮助你把“想很多、做很少”的混乱状态压成可执行的下一步。
 
+## 一键安装
+
+安装到 Codex 和 Claude Code 的用户级 skills 目录：
+
+```bash
+npx -y github:mengli1018/life-review-skill
+```
+
+只安装到 Codex：
+
+```bash
+npx -y github:mengli1018/life-review-skill codex
+```
+
+只安装到 Claude Code：
+
+```bash
+npx -y github:mengli1018/life-review-skill claude
+```
+
+安装到当前项目的 Claude Code skills 目录：
+
+```bash
+npx -y github:mengli1018/life-review-skill claude --project
+```
+
+安装后可以这样使用：
+
+```text
+使用 life-review skill，帮我复盘一件事。
+```
+
+Claude Code 中也可以直接调用：
+
+```text
+/life-review 帮我复盘为什么我总是想得多做得少，输出卡点诊断图和每日行动流程图。
+```
+
 ## 它能做什么
 
 - 复盘考试、考研、考公、求职、自由职业、关系、习惯、金钱、项目和情绪低谷。
@@ -15,65 +53,76 @@
 
 ```text
 life-review-skill/
-├─ README.md                 # 给人看的仓库说明
-├─ AGENTS.md                 # 给通用 AI coding agents 看的入口说明
-├─ CLAUDE.md                 # Claude Code 项目记忆，导入 AGENTS.md
-├─ 复盘量表-v1.md             # 独立完整版量表
+├─ README.md
+├─ package.json
+├─ scripts/
+│  └─ install.js
+├─ AGENTS.md
+├─ CLAUDE.md
+├─ 复盘量表-v1.md
 ├─ life-review/
-   ├─ SKILL.md               # Codex / 通用 Agent Skills 入口
-   ├─ agents/
-   │  └─ openai.yaml
-   └─ references/
-      └─ lrs-100.md
+│  ├─ SKILL.md
+│  ├─ agents/
+│  │  └─ openai.yaml
+│  └─ references/
+│     └─ lrs-100.md
 └─ .claude/
    └─ skills/
       └─ life-review/
-         ├─ SKILL.md         # Claude Code 项目级 skill
+         ├─ SKILL.md
          └─ references/
             └─ lrs-100.md
 ```
 
-## 使用方式
+## 安装位置
 
-### Codex
+默认安装位置：
 
-在 Codex 中使用当前文件夹里的 skill：
+| 目标 | 默认路径 |
+| --- | --- |
+| Codex | `~/.codex/skills/life-review` |
+| Claude Code | `~/.claude/skills/life-review` |
+| Claude Code 当前项目 | `./.claude/skills/life-review` |
 
-```text
-使用 C:/Users/linlin/Documents/复盘/life-review 这个 skill，帮我复盘一件事。
+自定义安装目录：
+
+```bash
+npx -y github:mengli1018/life-review-skill codex --codex-dir ~/my-codex-skills
 ```
 
-如果要全局安装到 Codex，可以把 `life-review/` 复制到你的 Codex skills 目录。
-
-### Claude Code
-
-本仓库已经包含 Claude Code 项目级 skill：
-
-```text
-.claude/skills/life-review/
+```bash
+npx -y github:mengli1018/life-review-skill claude --claude-dir ~/my-claude-skills
 ```
 
-在 Claude Code 中打开本仓库后，可以这样调用：
+预览安装路径但不复制文件：
 
-```text
-/life-review 帮我复盘为什么我总是想得多做得少，输出卡点诊断图和每日行动流程图。
+```bash
+npx -y github:mengli1018/life-review-skill --dry-run
 ```
 
-如果要作为 Claude Code 全局 skill 使用，可以把 `.claude/skills/life-review/` 复制到你的 Claude Code 用户级 skills 目录。
+## 手动安装
 
-### 其他 AI Agent
+如果不想用 `npx`：
 
-兼容 Agent Skills 的工具可以直接使用 `life-review/` 文件夹，因为它遵循 `SKILL.md + references/` 的通用结构。支持读取 `AGENTS.md` 的 AI coding agents 可以先读取根目录的 `AGENTS.md`，再按说明加载 `life-review/SKILL.md`。
+- Codex / 通用 Agent Skills：复制 `life-review/` 到对应工具的 skills 目录。
+- Claude Code 用户级 skill：复制 `life-review/` 到 `~/.claude/skills/life-review`。
+- Claude Code 项目级 skill：复制 `.claude/skills/life-review/` 到目标项目的 `.claude/skills/life-review/`。
 
-也可以指定风格：
+## 使用示例
+
+直白版：
 
 ```text
 使用 life-review skill，直白版帮我复盘为什么我总是想得多做得少。
 ```
 
+毒舌版：
+
 ```text
 使用 life-review skill，毒舌版帮我复盘我为什么总是计划很多但执行很少。
 ```
+
+督促版：
 
 ```text
 使用 life-review skill，督促版安排我今天的最低行动，晚上我回来打卡。

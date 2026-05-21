@@ -7,6 +7,7 @@ This repository packages a portable life-review Agent Skill.
 - Main portable skill: `life-review/SKILL.md`
 - Full reference: `life-review/references/lrs-100.md`
 - Claude Code project skill mirror: `.claude/skills/life-review/SKILL.md`
+- Public installer: `scripts/install.js`, exposed through `package.json` as the `life-review-skill` binary.
 
 Use the skill when the user wants to review, reflect on, diagnose, or plan around life events such as exams, career choices, free work/freelancing, repeated procrastination, relationships, habits, money decisions, creative projects, emotional lows, or major decisions.
 
@@ -37,7 +38,8 @@ When updating the skill:
 1. Update `life-review/SKILL.md` and/or `life-review/references/lrs-100.md` first.
 2. Mirror those changes into `.claude/skills/life-review/`.
 3. Keep `README.md` usage instructions in sync.
-4. Validate both skill folders before committing.
+4. Test the installer with `node scripts/install.js --dry-run` and `npm pack --dry-run`.
+5. Validate both skill folders before committing.
 
 Validation command on Windows:
 
@@ -46,4 +48,3 @@ $env:PYTHONUTF8='1'
 python 'C:/Users/linlin/.codex/skills/.system/skill-creator/scripts/quick_validate.py' 'C:/Users/linlin/Documents/复盘/life-review'
 python 'C:/Users/linlin/.codex/skills/.system/skill-creator/scripts/quick_validate.py' 'C:/Users/linlin/Documents/复盘/.claude/skills/life-review'
 ```
-

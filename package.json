@@ -1,0 +1,25 @@
+{
+  "name": "life-review-skill",
+  "version": "0.1.0",
+  "description": "Portable life-review Agent Skill for Codex, Claude Code, and other AI agents.",
+  "bin": {
+    "life-review-skill": "scripts/install.js"
+  },
+  "files": [
+    "life-review",
+    ".claude/skills/life-review",
+    "scripts/install.js",
+    "README.md",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "复盘量表-v1.md"
+  ],
+  "keywords": [
+    "agent-skill",
+    "codex",
+    "claude-code",
+    "retrospective",
+    "life-review"
+  ],
+  "license": "UNLICENSED"
+}
