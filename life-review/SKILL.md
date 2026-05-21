@@ -11,6 +11,8 @@ Use this skill to turn a concrete life event into a diagnosis, a visual map, and
 
 For full scoring criteria, domain modules, method library, source map, and extended templates, load `references/lrs-100.md`.
 
+For opt-in personal memory, long-term user context, and local "认知资料库" behavior, load `references/memory-protocol.md`.
+
 ## Core Workflow
 
 1. Scope one event.
@@ -35,7 +37,8 @@ For full scoring criteria, domain modules, method library, source map, and exten
    - If requested: 毒舌版, sharp but not humiliating.
    - If requested: 督促版, firm, specific, deadline-bound, and check-in oriented.
 9. Output Mermaid diagrams when useful.
-10. End with a 7-day experiment, an execution card, and one reusable personal rule.
+10. If the user asks to remember this review or build a personal knowledge base, use the Personal Memory workflow.
+11. End with a 7-day experiment, an execution card, and one reusable personal rule.
 
 ## Minimum Input Template
 
@@ -235,6 +238,56 @@ Then output:
 - Revised 7-day experiment.
 - One smaller minimum action.
 
+## Personal Memory
+
+Use this mode when the user asks to store prior reviews, remember their life context, build a "认知资料库", or make future reviews understand them better.
+
+Memory rules:
+
+- Ask for explicit consent before saving personal content.
+- Save summaries, repeated patterns, goals, constraints, preferences, and experiments; do not save raw transcripts by default.
+- Keep memory local. Never commit personal memory to a public repository.
+- Use memory as context, not as unquestionable truth.
+- If current information conflicts with memory, trust current information and ask whether to update memory.
+
+Default memory locations:
+
+```text
+~/.life-review/memory.md
+./life-review-memory.local.md
+```
+
+When asked to save memory:
+
+1. Propose a concise memory entry.
+2. Ask the user to approve or edit it.
+3. Save only after approval.
+4. Prefer `~/.life-review/memory.md` for cross-project memory.
+5. Use `life-review/scripts/memory.js` when a tool-capable agent wants deterministic create/append/show behavior.
+
+Memory helper:
+
+```bash
+node life-review/scripts/memory.js init
+node life-review/scripts/memory.js append --title "event name" --entry "- Summary: ..."
+node life-review/scripts/memory.js show
+```
+
+Memory entry format:
+
+```markdown
+### YYYY-MM-DD - <event name>
+
+- Summary:
+- Current context:
+- Core stuck point:
+- Primary contradiction:
+- Recurring pattern:
+- Effective strategy:
+- Next experiment:
+- Follow-up date:
+```
+
 ## Standard Output
 
 Use this structure unless the user asks for something shorter:
@@ -271,7 +324,8 @@ Use this structure unless the user asks for something shorter:
 21. 今日执行卡：
 22. 7 天后复查问题：
 23. 督促版打卡格式：
-24. 个人规则：
+24. 认知资料库更新建议：
+25. 个人规则：
 ```
 
 ## Safety And Boundaries

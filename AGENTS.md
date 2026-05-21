@@ -6,6 +6,7 @@ This repository packages a portable life-review Agent Skill.
 
 - Main portable skill: `life-review/SKILL.md`
 - Full reference: `life-review/references/lrs-100.md`
+- Personal memory protocol: `life-review/references/memory-protocol.md`
 - Claude Code project skill mirror: `.claude/skills/life-review/SKILL.md`
 - Public installer: `scripts/install.js`, exposed through `package.json` as the `life-review-skill` binary.
 
@@ -24,6 +25,7 @@ When using this skill, produce practical retrospectives that may include:
 - direct advice in `直白版`, `毒舌版`, or `督促版`
 - today execution card
 - 7-day experiment and follow-up questions
+- optional private local memory updates, after explicit user consent
 
 ## How To Use
 
@@ -39,7 +41,8 @@ When updating the skill:
 2. Mirror those changes into `.claude/skills/life-review/`.
 3. Keep `README.md` usage instructions in sync.
 4. Test the installer with `node scripts/install.js --dry-run` and `npm pack --dry-run`.
-5. Validate both skill folders before committing.
+5. If memory behavior changes, update `life-review/references/memory-protocol.md` and keep personal memory files out of git.
+6. Validate both skill folders before committing.
 
 Validation command on Windows:
 

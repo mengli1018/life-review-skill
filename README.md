@@ -10,6 +10,12 @@
 npx -y github:mengli1018/life-review-skill
 ```
 
+安装并创建本地私密认知资料库：
+
+```bash
+npx -y github:mengli1018/life-review-skill --init-memory
+```
+
 只安装到 Codex：
 
 ```bash
@@ -48,6 +54,7 @@ Claude Code 中也可以直接调用：
 - 输出直白版、毒舌版、督促版三种建议风格。
 - 生成 Mermaid 流程图，展示卡点诊断图、每日行动流程图、遇阻分流图。
 - 给出今日执行卡和 7 天后复查问题，方便持续追踪。
+- 可选建立本地私密“认知资料库”，保存长期模式、目标、卡点、偏好和实验结果。
 
 ## 文件结构
 
@@ -64,8 +71,11 @@ life-review-skill/
 │  ├─ SKILL.md
 │  ├─ agents/
 │  │  └─ openai.yaml
-│  └─ references/
-│     └─ lrs-100.md
+│  ├─ references/
+│     ├─ lrs-100.md
+│     └─ memory-protocol.md
+│  └─ scripts/
+│     └─ memory.js
 └─ .claude/
    └─ skills/
       └─ life-review/
@@ -83,6 +93,7 @@ life-review-skill/
 | Codex | `~/.codex/skills/life-review` |
 | Claude Code | `~/.claude/skills/life-review` |
 | Claude Code 当前项目 | `./.claude/skills/life-review` |
+| 私密认知资料库 | `~/.life-review/memory.md` |
 
 自定义安装目录：
 
@@ -100,6 +111,12 @@ npx -y github:mengli1018/life-review-skill claude --claude-dir ~/my-claude-skill
 npx -y github:mengli1018/life-review-skill --dry-run
 ```
 
+自定义认知资料库路径：
+
+```bash
+npx -y github:mengli1018/life-review-skill --init-memory --memory-file ~/my-life-review-memory.md
+```
+
 ## 手动安装
 
 如果不想用 `npx`：
@@ -107,6 +124,27 @@ npx -y github:mengli1018/life-review-skill --dry-run
 - Codex / 通用 Agent Skills：复制 `life-review/` 到对应工具的 skills 目录。
 - Claude Code 用户级 skill：复制 `life-review/` 到 `~/.claude/skills/life-review`。
 - Claude Code 项目级 skill：复制 `.claude/skills/life-review/` 到目标项目的 `.claude/skills/life-review/`。
+
+## 认知资料库
+
+认知资料库是可选功能，用来保存你长期复盘中反复出现的模式、目标、卡点、偏好和实验结果。它默认保存在本地：
+
+```text
+~/.life-review/memory.md
+```
+
+重要原则：
+
+- 保存前应先征求你的同意。
+- 默认保存压缩摘要，不保存原始聊天全文。
+- 不上传到公开 GitHub 仓库。
+- 你可以随时要求查看、修改、删除或停止记忆。
+
+在对话里可以这样说：
+
+```text
+使用 life-review skill，帮我把这次复盘压缩成一条认知资料库记忆，先给我确认后再保存。
+```
 
 ## 使用示例
 

@@ -1,3 +1,6 @@
 CLAUDE.local.md
 .claude/settings.local.json
-
+life-review-memory.local.md
+memory.local.md
+.life-review/
+*.personal-memory.md

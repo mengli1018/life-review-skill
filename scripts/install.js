@@ -23,6 +23,8 @@ Options:
   --project             For target "claude", install into ./.claude/skills
   --codex-dir <dir>     Override Codex skills directory
   --claude-dir <dir>    Override Claude Code skills directory
+  --init-memory         Create ~/.life-review/memory.md private memory file
+  --memory-file <file>  Override private memory file path for --init-memory
   --dry-run             Print destinations without copying files
   --help                Show this help
 
@@ -41,7 +43,9 @@ function parseArgs(argv) {
     project: false,
     dryRun: false,
     codexDir: null,
-    claudeDir: null
+    claudeDir: null,
+    initMemory: false,
+    memoryFile: null
   };
 
   while (args.length) {
@@ -52,10 +56,14 @@ function parseArgs(argv) {
       options.project = true;
     } else if (arg === "--dry-run") {
       options.dryRun = true;
+    } else if (arg === "--init-memory") {
+      options.initMemory = true;
     } else if (arg === "--codex-dir") {
       options.codexDir = requireValue(arg, args.shift());
     } else if (arg === "--claude-dir") {
       options.claudeDir = requireValue(arg, args.shift());
+    } else if (arg === "--memory-file") {
+      options.memoryFile = requireValue(arg, args.shift());
     } else if (["both", "codex", "claude"].includes(arg)) {
       options.target = arg;
     } else {
@@ -94,6 +102,10 @@ function defaultClaudeSkillsDir(projectMode) {
   return path.join(os.homedir(), ".claude", "skills");
 }
 
+function defaultMemoryFile() {
+  return path.join(os.homedir(), ".life-review", "memory.md");
+}
+
 function copyDir(source, destination) {
   if (!fs.existsSync(source)) {
     throw new Error(`Missing source skill directory: ${source}`);
@@ -102,6 +114,61 @@ function copyDir(source, destination) {
   fs.rmSync(destination, { recursive: true, force: true });
   fs.mkdirSync(path.dirname(destination), { recursive: true });
   fs.cpSync(source, destination, { recursive: true });
+}
+
+function memoryTemplate() {
+  return `# Life Review Personal Memory
+
+This file is private local memory for the life-review skill. Do not commit it to public repositories.
+
+## Stable Facts
+
+- 
+
+## Current Goals
+
+- 
+
+## Recurring Patterns
+
+- 
+
+## Stuck Points
+
+- 
+
+## Effective Strategies
+
+- 
+
+## Preferences
+
+- Advice style:
+- Output style:
+- Accountability:
+
+## Open Questions
+
+- 
+
+## Review Log
+
+`;
+}
+
+function initMemoryFile(file, dryRun) {
+  const resolved = path.resolve(expandHome(file || defaultMemoryFile()));
+  if (dryRun) {
+    console.log(`[dry-run] Memory file: ${resolved}`);
+    return;
+  }
+  fs.mkdirSync(path.dirname(resolved), { recursive: true });
+  if (!fs.existsSync(resolved)) {
+    fs.writeFileSync(resolved, memoryTemplate(), "utf8");
+    console.log(`[ok] Created private memory file at ${resolved}`);
+  } else {
+    console.log(`[ok] Private memory file already exists at ${resolved}`);
+  }
 }
 
 function installOne(label, baseDir, dryRun) {
@@ -139,6 +206,10 @@ function main() {
 
   for (const install of installs) {
     installOne(install.label, install.dir, options.dryRun);
+  }
+
+  if (options.initMemory) {
+    initMemoryFile(options.memoryFile, options.dryRun);
   }
 
   if (!options.dryRun) {
